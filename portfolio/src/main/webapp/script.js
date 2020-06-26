@@ -27,10 +27,16 @@ function addRandomFact() {
   factContainer.innerText = fact;
 }
 
-async function getGreeting() {
+async function getMessage() {
+    // fetch('/data').then(response => response.json()).then((messages) => {
+
+    //     const messageList = document.getElementById('message-container');
+    //     messageList.innerHTML = ''
+    //     messages.
+    // }    
     const response = await fetch('/data')
     const quote = await response.text()
-    document.getElementById('greeting-container').innerText = quote;
+    document.getElementById('message-container').innerText = quote;
 
 
 }
