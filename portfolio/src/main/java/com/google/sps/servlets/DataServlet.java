@@ -35,18 +35,20 @@ public class DataServlet extends HttpServlet {
     messages.add("Let\'s make the most of this beautiful day!");
     messages.add("I\'ve always wanted to have a neighbor just like you!");
     String json = convertToJson(messages);
-    response.setContentType("application/json;");
+    response.setContentType("application/json");
     response.getWriter().println(json);
   }
 
   private String convertToJson(List<String> messages) {
       String json = "{";
-      json += "\"message 1\": ";
-      json += messages.get(0);
-      json += "\"message 2\": ";
-      json += messages.get(1);
-      json += "\"message 3\": ";
-      json += messages.get(2);
+      json += "\"message1\": ";
+      json += "\"" + messages.get(0) + "\"";
+      json += ", ";
+      json += "\"message2\": ";
+      json += "\"" + messages.get(1) + "\"";
+      json += ", ";
+      json += "\"message3\": ";
+      json += "\"" + messages.get(2) + "\"";
       json += "}";
       return json;
   }
