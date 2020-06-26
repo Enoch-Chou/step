@@ -27,16 +27,23 @@ function addRandomFact() {
   factContainer.innerText = fact;
 }
 
-async function getMessage() {
-    // fetch('/data').then(response => response.json()).then((messages) => {
+function getMessage() {
+    fetch('/data')
+    .then(response => response.json()).then((messages) => {
 
-    //     const messageList = document.getElementById('message-container');
-    //     messageList.innerHTML = ''
-    //     messages.
-    // }    
-    const response = await fetch('/data')
-    const quote = await response.text()
-    document.getElementById('message-container').innerText = quote;
+        const messageList = document.getElementById('message-container');
+        messageList.innerHTML = ''
+        messageList.appendChild(createListElement('Message 1: ' + messages.message1));
+        messageList.appendChild(createListElement('Message 2: ' + messages.message2));
+        messageList.appendChild(createListElement('Message 3: ' + messages.message3));
+    });
 
 
+}
+
+function createListElement(text) {
+    const listElement = document.createElement('li');
+    listElement.innerText = text;
+    return listElement
+    
 }
