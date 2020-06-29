@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private List<String> messages;
+  private List<String> messages ;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -39,6 +39,7 @@ public class DataServlet extends HttpServlet {
     response.getWriter().println(json);
   }
 
+  //Converts an array of 3 messages into a Json Object and returns the object
   private String convertToJson(List<String> messages) {
       String json = "{";
       json += "\"message1\": ";
