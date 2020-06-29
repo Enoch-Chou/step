@@ -17,6 +17,7 @@ package com.google.sps.servlets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,19 +40,11 @@ public class DataServlet extends HttpServlet {
     response.getWriter().println(json);
   }
 
-  //Converts an array of 3 messages into a Json Object and returns the object
+  //Converts an array of strings into a Json array
   private String convertToJson(List<String> messages) {
-      String json = "{";
-      json += "\"message1\": ";
-      json += "\"" + messages.get(0) + "\"";
-      json += ", ";
-      json += "\"message2\": ";
-      json += "\"" + messages.get(1) + "\"";
-      json += ", ";
-      json += "\"message3\": ";
-      json += "\"" + messages.get(2) + "\"";
-      json += "}";
-      return json;
+    Gson gson = new Gson();
+    String json = gson.toJson(messages);
+    return json;
   }
 }
 
