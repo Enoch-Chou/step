@@ -27,7 +27,7 @@ function addRandomFact() {
   factContainer.innerText = fact;
 }
 
-  //retrieves the hard-code message list
+  //retrieves and formats the hard-code message list
 function getMessage() {
     fetch('/data')
     .then(response => response.json()).then((messages) => {
@@ -42,7 +42,7 @@ function getMessage() {
 
 }
 
-  //retrieves the inputted comments from the website
+  //retrieves and formats the inputted comments from the website
 function getComments() {
     fetch('/data').then(response => response.json()).then((comments) => {
         
