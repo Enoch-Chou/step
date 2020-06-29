@@ -27,7 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private List<String> messages ;
+  private List<String> messages;
+  private List<String> comments = new ArrayList<String>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -35,9 +36,25 @@ public class DataServlet extends HttpServlet {
     messages.add("It\'s a beautiful day in the neighborhood!");
     messages.add("Let\'s make the most of this beautiful day!");
     messages.add("I\'ve always wanted to have a neighbor just like you!");
-    String json = convertToJson(messages);
+    String json = convertToJson(comments);
     response.setContentType("application/json");
     response.getWriter().println(json);
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+      //Get the input from the form
+      String text = getParameter(request, "text-input", "This is an empty comment!");
+      
+      if (!text.equals("This is an empty comment!")) {
+        comments.add(text);
+      }
+
+      response.setContentType("application/json");
+      response.getWriter().println(comments);
+      
+      //Redirect back to the HTML page.
+      response.sendRedirect("/index.html");
   }
 
   //Converts an array of strings into a Json array
@@ -45,6 +62,15 @@ public class DataServlet extends HttpServlet {
     Gson gson = new Gson();
     String json = gson.toJson(messages);
     return json;
+  }
+
+  //retrieves the inputted comments on the website
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+      String value = request.getParameter(name);
+      if (value == null) {
+          return defaultValue;
+      }
+      return value;
   }
 }
 
