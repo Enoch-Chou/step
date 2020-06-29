@@ -33,9 +33,9 @@ function getMessage() {
 
         const messageList = document.getElementById('message-container');
         messageList.innerHTML = ''
-        messageList.appendChild(createListElement('Message 1: ' + messages.message1));
-        messageList.appendChild(createListElement('Message 2: ' + messages.message2));
-        messageList.appendChild(createListElement('Message 3: ' + messages.message3));
+        messageList.appendChild(createListElement('Message 1: ' + messages[0]));
+        messageList.appendChild(createListElement('Message 2: ' + messages[1]));
+        messageList.appendChild(createListElement('Message 3: ' + messages[2]));
     });
 
 
