@@ -13,13 +13,13 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Adds a random fact about me to the page.
  */
 function addRandomFact() {
   const facts =
       ['I was born in Arizona', 'I play three instruments', 'My favorite animal is the capybara', 'I\'ve never broken a bone before'];
 
-  // Pick a random greeting.
+  // Pick a random fact.
   const fact = facts[Math.floor(Math.random() * facts.length)];
 
   // Add it to the page.
