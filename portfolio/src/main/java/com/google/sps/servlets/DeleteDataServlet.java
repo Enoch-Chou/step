@@ -15,9 +15,6 @@
 package com.google.sps.servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import com.google.gson.Gson;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -49,7 +46,6 @@ public class DeleteDataServlet extends HttpServlet {
 
         for (Entity entity : results.asIterable()) {
         Key key = entity.getKey();
-        String comment = (String) entity.getProperty("comment");
         datastore.delete(key);
         }
 
