@@ -45,8 +45,8 @@ public class DeleteDataServlet extends HttpServlet {
         PreparedQuery results = datastore.prepare(query);
 
         for (Entity entity : results.asIterable()) {
-        Key key = entity.getKey();
-        datastore.delete(key);
+            Key key = entity.getKey();
+            datastore.delete(key);
         }
 
         String json = "[done!]";
