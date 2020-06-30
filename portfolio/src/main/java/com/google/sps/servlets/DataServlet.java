@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DataServlet extends HttpServlet {
 
   private List<String> messages;
-
+  private List<String> comments = new ArrayList<String>();
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     messages = new ArrayList<String>();
@@ -45,12 +45,16 @@ public class DataServlet extends HttpServlet {
     Query query = new Query("comments").addSort("timestamp", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
-
+    
+    int numComments = Integer.parseInt(request.getParameter("numComments"));
     //Prints out everything in datastore
-    List<String> comments = new ArrayList<String>();
+    comments.clear();
     for (Entity entity : results.asIterable()) {
         String comment = (String) entity.getProperty("comment");
         comments.add(comment);
+        if (comments.size() == numComments) {
+            break;
+        }
     }
 
     String json = convertToJson(comments);
@@ -100,4 +104,5 @@ public class DataServlet extends HttpServlet {
       return value;
   }
 }
+
 
