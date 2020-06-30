@@ -44,13 +44,21 @@ function getMessage() {
 
   //retrieves and formats the inputted comments from the website
 function getComments() {
-    fetch('/data').then(response => response.json()).then((comments) => {
-        
+    const numberOfComments = document.getElementById('inputtedNumber').value;
+    const query = `/data?numComments=${ numberOfComments }`;
+    fetch(query).then(response => response.json()).then((comments) => {
         const commentList = document.getElementById('comment-container');
         commentList.innerHTML = ''
         for (index = 0; index < comments.length; index++) {
-            commentList.appendChild(createListElement('' + comments[index]));
+            commentList.appendChild(createListElement(comments[index]));
         }
+    });
+}
+
+function deleteComments() {
+    fetch('/delete-data').then(response => response.json()).then((message) => {
+        const taskComplete = document.getElementById('completionNotice');
+        taskComplete.innerText = "";
     });
 }
 
