@@ -27,21 +27,6 @@ function addRandomFact() {
   factContainer.innerText = fact;
 }
 
-  //retrieves and formats the hard-code message list
-function getMessage() {
-    fetch('/data')
-    .then(response => response.json()).then((messages) => {
-
-        const messageList = document.getElementById('message-container');
-        messageList.innerHTML = ''
-        messageList.appendChild(createListElement('Message 1: ' + messages[0]));
-        messageList.appendChild(createListElement('Message 2: ' + messages[1]));
-        messageList.appendChild(createListElement('Message 3: ' + messages[2]));
-    });
-
-
-}
-
   //retrieves and formats the inputted comments from the website
 function getComments() {
     const numberOfComments = document.getElementById('inputtedNumber').value;
