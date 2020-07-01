@@ -65,12 +65,9 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
       //Get the input from the form
-      String text = getParameter(request, "text-input", "This is an empty comment!");
+      String text = request.getParameter("text-input");
       long timestamp = System.currentTimeMillis();
-
-      if (!text.equals("This is an empty comment!")) {
-        comments.add(text);
-      }
+      
     
       //Creates Entity to store in Datastore
       Entity commentEntity = new Entity("comments");
@@ -79,7 +76,11 @@ public class DataServlet extends HttpServlet {
 
 
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+      
+      //Prevents empty comments being submitted
+      if (text.length() > 0) {
       datastore.put(commentEntity);
+      }
 
       response.setContentType("application/json");
       response.getWriter().println(comments);
@@ -95,14 +96,6 @@ public class DataServlet extends HttpServlet {
     return json;
   }
 
-  //retrieves the inputted comments on the website
-  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
-      String value = request.getParameter(name);
-      if (value == null) {
-          return defaultValue;
-      }
-      return value;
-  }
 }
 
 
