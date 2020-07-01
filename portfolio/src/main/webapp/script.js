@@ -58,24 +58,25 @@ function createListElement(text) {
     
 }
 
+//draws a chart based on user-submitted data
 function drawChart() {
-    const data = new google.visualization.DataTable();
-    data.addColumn('string', 'Type of Chocolate');
-    data.addColumn('number', 'Count');
-        data.addRows([
-          ['Milk Chocolate', 10],
-          ['White Chocolate', 5],
-          ['Dark Chocolate', 15]
-        ]);
+    fetch('/chocolate-data').then(response => response.json()).then((chocolateTypeVotes) => {
+        const data = new google.visualization.DataTable();
+        data.addColumn('string', 'Type of Chocolate');
+        data.addColumn('number', 'Votes');
+            Object.keys(chocolateTypeVotes).forEach((chocolateType) => {
+                data.addRow([chocolateType, chocolateTypeVotes[chocolateType]]);
+            });
 
-    const options = {
-        'title': 'Chocolate Preferences',
-        is3D: true,
-        'width':500,
-        'height':400
-    };
+        const options = {
+            'title': 'Chocolate Preferences',
+            is3D: true,
+            'width':500,
+            'height':400
+        };
 
-    const chart = new google.visualization.PieChart(
-        document.getElementById('chart-container'));
-    chart.draw(data, options);
+        const chart = new google.visualization.PieChart(
+            document.getElementById('chart-container'));
+        chart.draw(data, options);
+    });
 }
