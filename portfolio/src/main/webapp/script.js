@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
 /**
  * Adds a random fact about me to the page.
  */
@@ -53,4 +56,26 @@ function createListElement(text) {
     listElement.innerText = text;
     return listElement
     
+}
+
+function drawChart() {
+    const data = new google.visualization.DataTable();
+    data.addColumn('string', 'Type of Chocolate');
+    data.addColumn('number', 'Count');
+        data.addRows([
+          ['Milk Chocolate', 10],
+          ['White Chocolate', 5],
+          ['Dark Chocolate', 15]
+        ]);
+
+    const options = {
+        'title': 'Chocolate Preferences',
+        is3D: true,
+        'width':500,
+        'height':400
+    };
+
+    const chart = new google.visualization.PieChart(
+        document.getElementById('chart-container'));
+    chart.draw(data, options);
 }
