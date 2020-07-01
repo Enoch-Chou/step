@@ -33,14 +33,10 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private List<String> messages;
+
   private List<String> comments = new ArrayList<String>();
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    messages = new ArrayList<String>();
-    messages.add("It\'s a beautiful day in the neighborhood!");
-    messages.add("Let\'s make the most of this beautiful day!");
-    messages.add("I\'ve always wanted to have a neighbor just like you!");
     
     Query query = new Query("comments").addSort("timestamp", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -57,7 +53,7 @@ public class DataServlet extends HttpServlet {
         }
     }
 
-    String json = convertToJson(comments);
+    String json = convertArrayToJson(comments);
     response.setContentType("application/json");
     response.getWriter().println(json);
   }
@@ -77,7 +73,7 @@ public class DataServlet extends HttpServlet {
 
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
       
-      //Prevents empty comments being submitted
+      //Prevents empty comments
       if (text.length() > 0) {
       datastore.put(commentEntity);
       }
@@ -89,10 +85,9 @@ public class DataServlet extends HttpServlet {
       response.sendRedirect("/index.html");
   }
 
-  //Converts an array of strings into a Json array
-  private String convertToJson(List<String> messages) {
+  private String convertArrayToJson(List<String> input) {
     Gson gson = new Gson();
-    String json = gson.toJson(messages);
+    String json = gson.toJson(input);
     return json;
   }
 
