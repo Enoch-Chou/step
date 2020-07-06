@@ -7,3 +7,9 @@
 #greeting-container {
   margin-top: 20px;
 }
+
+#map {
+    width: 1000px;
+    height: 1000px;
+    background-color: grey;
+}
