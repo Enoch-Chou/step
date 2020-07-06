@@ -82,12 +82,37 @@ function drawChart() {
 }
 
 function createMap() {
-    const in_n_out = {lat: 33.3064084, lng: -111.8917977};
-    const chandler_fashion_center = {lat: 33.3014708, lng: -111.9006872}
     const map = new google.maps.Map(
         document.getElementById('map'),
-        {center: chandler_fashion_center, zoom:15}
-    );
-    const marker1 = new google.maps.Marker({position:in_n_out, map:map});
-    const marker2 = new google.maps.Marker({position:chandler_fashion_center, map:map});
+        {center: {lat: 33.3014708, lng: -111.9006872}, zoom:15});
+
+    const in_n_out_marker = new google.maps.Marker({
+        position: {lat: 33.3064084, lng: -111.8917977},
+        map: map,
+        title: 'In-n-out burger'
+    });
+
+    const chandler_fashion_center_marker = new google.maps.Marker({
+        position: {lat: 33.3014708, lng: -111.9006872},
+        map: map,
+        title: 'Chandler Fashion Center'
+    });
+
+    const chipotle_marker = new google.maps.Marker({
+        position: {lat: 33.3051988, lng: -111.8999072},
+        map: map,
+        title: 'Chipotle Mexican Grill'
+    });
+    
+    const in_n_out_info_window = 
+        new google.maps.InfoWindow({content: 'This is in-n-out burger, one of my favorite fast food joints.'});
+    in_n_out_info_window.open(map, in_n_out_marker);
+
+    const chandler_fashion_center_info_window = 
+        new google.maps.InfoWindow({content: 'This is the Chandler Fashion Center, a frequent hangout spot for me and my friends'});
+    chandler_fashion_center_info_window.open(map, chandler_fashion_center_marker);
+
+    const chipotle_info_window = 
+        new google.maps.InfoWindow({content: 'This is Chipotle, another one of my favorite fast food joints'});
+    chipotle_info_window.open(map, chipotle_marker);
 }
