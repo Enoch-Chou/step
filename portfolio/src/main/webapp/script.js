@@ -82,8 +82,12 @@ function drawChart() {
 }
 
 function createMap() {
+    const in_n_out = {lat: 33.3064084, lng: -111.8917977};
+    const chandler_fashion_center = {lat: 33.3014708, lng: -111.9006872}
     const map = new google.maps.Map(
         document.getElementById('map'),
-        {center: {lat: 37.422, lng: -122.084}, zoom:16}
+        {center: chandler_fashion_center, zoom:15}
     );
+    const marker1 = new google.maps.Marker({position:in_n_out, map:map});
+    const marker2 = new google.maps.Marker({position:chandler_fashion_center, map:map});
 }
