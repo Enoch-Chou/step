@@ -33,6 +33,8 @@ public final class FindMeetingQuery {
             if (event.getAttendees().contains(attendee)) { //check if the current attendee is in the event
                 TimeRange eventTimeRange = event.getWhen();
                 Iterator<TimeRange> iterator = collection.iterator();
+                
+                //Goes through and splices the day into sections where there are no time range overlaps
                 for (int index = 0; index < collection.size(); index++) {
                     TimeRange currTimeRange = collection.get(index);
                     if (currTimeRange.overlaps(eventTimeRange)) {
@@ -45,6 +47,8 @@ public final class FindMeetingQuery {
                         collection.remove(currTimeRange);
                     }
                 }
+
+                //Gets rid of any possible events in the array or impossible time ranges
                 for (int index = 0; index < collection.size(); index++) {
                     TimeRange currTimeRange = collection.get(index);
                     if (currTimeRange.overlaps(eventTimeRange)) {
@@ -57,6 +61,8 @@ public final class FindMeetingQuery {
             }
         }
     }
+
+    //gets rid of additional impossible time ranges
     for (int  index = 0; index < collection.size(); index++) {
         TimeRange currTimeRange = collection.get(index);
         if (currTimeRange.duration() == 0) {
@@ -71,6 +77,7 @@ public final class FindMeetingQuery {
             if (event.getAttendees().contains(attendee)) {
                 TimeRange eventTimeRange = event.getWhen();
                 Iterator<TimeRange> iterator = collection.iterator();
+                //checks if the optional attendees can make it
                 if (request.getAttendees().size() != 0) {
                     for (int index = 0; index < collection.size(); index++) {
                         TimeRange currTimeRange = collection.get(index);
@@ -80,6 +87,7 @@ public final class FindMeetingQuery {
                     }
                 }
                 else {
+                    //Goes through and splices the day into sections where there are no time range overlaps if there are only optional attendees
                     for (int index = 0; index < optionalCollection.size(); index++) {
                         TimeRange currTimeRange = optionalCollection.get(index);
                         if (currTimeRange.overlaps(eventTimeRange)) {
@@ -92,6 +100,8 @@ public final class FindMeetingQuery {
                             optionalCollection.remove(currTimeRange);
                         }   
                     }
+
+                    //Gets rid of any possible events in the array or impossible time ranges
                     for (int index = 0; index < optionalCollection.size(); index++) {
                         TimeRange currTimeRange = optionalCollection.get(index);
                         if (currTimeRange.overlaps(eventTimeRange)) {
@@ -105,12 +115,16 @@ public final class FindMeetingQuery {
             }
         }
     }
+
+    //gets rid of additional impossible time ranges
     for (int  index = 0; index < optionalCollection.size(); index++) {
         TimeRange currTimeRange = optionalCollection.get(index);
         if (currTimeRange.duration() == 0) {
             optionalCollection.remove(currTimeRange);
         }
     }
+
+    //if there are time ranges within the collection that optional attendees can attend, return the time ranges.
     if (optionalCollection.size() != 0) {
         collection = optionalCollection;
     }
