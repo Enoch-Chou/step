@@ -81,7 +81,6 @@ function drawChart() {
     });
 }
 
-//displays a map and marks three of my favorite places on the map
 function createMap() {
     const map = new google.maps.Map(
         document.getElementById('map'),
