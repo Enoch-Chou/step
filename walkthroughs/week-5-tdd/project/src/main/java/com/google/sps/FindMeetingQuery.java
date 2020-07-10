@@ -22,7 +22,6 @@ public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     ArrayList<TimeRange> collection = new ArrayList<TimeRange>();
     ArrayList<TimeRange> optionalCollection = new ArrayList<TimeRange>();
-    Collection<TimeRange> valuesToRemove = new ArrayList<TimeRange>();
     TimeRange timeRange = TimeRange.fromStartDuration(0, 1440);
     collection.add(timeRange); //original timeRange
     if (request.getDuration() >= 1440) {
