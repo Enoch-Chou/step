@@ -15,9 +15,105 @@
 package com.google.sps;
 
 import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    throw new UnsupportedOperationException("TODO: Implement this method.");
+    ArrayList<TimeRange> collection = new ArrayList<TimeRange>();
+    ArrayList<TimeRange> optionalCollection = new ArrayList<TimeRange>();
+    Collection<TimeRange> valuesToRemove = new ArrayList<TimeRange>();
+    TimeRange timeRange = TimeRange.fromStartDuration(0, 1440);
+    collection.add(timeRange); //original timeRange
+    if (request.getDuration() >= 1440) {
+        collection.clear();
+    }
+    for (String attendee: request.getAttendees()) { //check every attendee in the request
+        for (Event event: events) { //check every event
+            if (event.getAttendees().contains(attendee)) { //check if the current attendee is in the event
+                TimeRange eventTimeRange = event.getWhen();
+                Iterator<TimeRange> iterator = collection.iterator();
+                for (int index = 0; index < collection.size(); index++) {
+                    TimeRange currTimeRange = collection.get(index);
+                    if (currTimeRange.overlaps(eventTimeRange)) {
+                        int startDifference = Math.abs(eventTimeRange.start() - currTimeRange.start());
+                        int endDifference = Math.abs(currTimeRange.end() - eventTimeRange.end());
+                        int start = Math.min(currTimeRange.start(), eventTimeRange.start());
+                        int end = Math.min(currTimeRange.end(), eventTimeRange.end());
+                        collection.add(TimeRange.fromStartDuration(start, startDifference));
+                        collection.add(TimeRange.fromStartDuration(end, endDifference));
+                        collection.remove(currTimeRange);
+                    }
+                }
+                for (int index = 0; index < collection.size(); index++) {
+                    TimeRange currTimeRange = collection.get(index);
+                    if (currTimeRange.overlaps(eventTimeRange)) {
+                        collection.remove(currTimeRange);
+                    }
+                    if (currTimeRange.duration() < request.getDuration()) {
+                        collection.remove(currTimeRange);
+                    }
+                }
+            }
+        }
+    }
+    for (int  index = 0; index < collection.size(); index++) {
+        TimeRange currTimeRange = collection.get(index);
+        if (currTimeRange.duration() == 0) {
+            collection.remove(currTimeRange);
+        }
+    }
+    optionalCollection.addAll(collection);
+    
+    //for optional attendees
+    for (String attendee: request.getOptionalAttendees()) {
+        for (Event event: events) {
+            if (event.getAttendees().contains(attendee)) {
+                TimeRange eventTimeRange = event.getWhen();
+                Iterator<TimeRange> iterator = collection.iterator();
+                if (request.getAttendees().size() != 0) {
+                    for (int index = 0; index < collection.size(); index++) {
+                        TimeRange currTimeRange = collection.get(index);
+                        if (currTimeRange.overlaps(eventTimeRange)) {
+                            optionalCollection.remove(currTimeRange);
+                        }   
+                    }
+                }
+                else {
+                    for (int index = 0; index < optionalCollection.size(); index++) {
+                        TimeRange currTimeRange = optionalCollection.get(index);
+                        if (currTimeRange.overlaps(eventTimeRange)) {
+                            int startDifference = Math.abs(eventTimeRange.start() - currTimeRange.start());
+                            int endDifference = Math.abs(currTimeRange.end() - eventTimeRange.end());
+                            int start = Math.min(currTimeRange.start(), eventTimeRange.start());
+                            int end = Math.min(currTimeRange.end(), eventTimeRange.end());
+                            optionalCollection.add(TimeRange.fromStartDuration(start, startDifference));
+                            optionalCollection.add(TimeRange.fromStartDuration(end, endDifference));
+                            optionalCollection.remove(currTimeRange);
+                        }   
+                    }
+                    for (int index = 0; index < optionalCollection.size(); index++) {
+                        TimeRange currTimeRange = optionalCollection.get(index);
+                        if (currTimeRange.overlaps(eventTimeRange)) {
+                            optionalCollection.remove(currTimeRange);
+                        }
+                        if (currTimeRange.duration() < request.getDuration()) {
+                            optionalCollection.remove(currTimeRange);
+                        }
+                    }                    
+                }           
+            }
+        }
+    }
+    for (int  index = 0; index < optionalCollection.size(); index++) {
+        TimeRange currTimeRange = optionalCollection.get(index);
+        if (currTimeRange.duration() == 0) {
+            optionalCollection.remove(currTimeRange);
+        }
+    }
+    if (optionalCollection.size() != 0) {
+        collection = optionalCollection;
+    }
+    return collection;
   }
 }
