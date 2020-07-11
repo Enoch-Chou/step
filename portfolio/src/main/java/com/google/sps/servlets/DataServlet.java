@@ -43,7 +43,7 @@ public class DataServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
     
     int numComments = Integer.parseInt(request.getParameter("numComments"));
-    //Prints out everything in datastore
+    // Prints out everything in datastore
     comments.clear();
     for (Entity entity : results.asIterable()) {
         String comment = (String) entity.getProperty("comment");
@@ -75,7 +75,7 @@ public class DataServlet extends HttpServlet {
       
       //Prevents empty comments
       if (text.length() > 0) {
-      datastore.put(commentEntity);
+        datastore.put(commentEntity);
       }
 
       response.setContentType("application/json");
