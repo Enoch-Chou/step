@@ -9,9 +9,10 @@
     <script src="script.js"></script>
   </head>
   <body>
-    <div id="content">
-      <h1>Enoch Chou's Portfolio</h1>
-      <p>This is my portfolio.</p>
+    <div id="home">
+      <h1>Enoch Chou</h1>
+      <p>Welcome to my portfolio!</p>
+      <a href= "resume.html">Resume</a>   <a href="projects.html">Projects</a>   <a href="explore.html">Explore</a>
       <p>I'm a rising freshman at Williams College, with a prospective double
          major in computer science and music. In my free time I love making 
          music, working out, and playing computer games!</p>
@@ -21,19 +22,6 @@
       <button onclick="addRandomFact()">fact</button>
     
       <div id="fact-container"></div>
-
-
-      <h1>About me</h1>
-      <p>I was born in Arizona, and I grew up in a family of six, with three 
-         older brothers. Growing up the son of two immigrants, I learned how
-         to budget my little time and resources to work hard at what I 
-         prioritized, something I learned from watching my parents who
-         budgeted their time and resources in order to provide me and my 
-         brothers an education and constantly care for those around them. 
-         These are things that I practice each day, striving to work hard
-         in every task I'm given and to help as many people as I can, and 
-         above all, remaining grateful for all the opportunities and 
-         privileges I've been granted.</p>
 
       <h1>Projects</h1>
       <p>Here is a list of some of my past computer science projects:</p>
@@ -73,46 +61,6 @@
         <h1>Links</h1>
         <a href="https://github.com/Enoch-Chou">Github</a>
         <a href="https://www.linkedin.com/in/enoch-chou-59a002192/">Linkedin</a>
-
-        <h1>Fun Interaction!</h1>
-
-        <form action="/data" method="POST">
-            <p>Please add a comment!</p>
-            <textarea name="text-input"></textarea>
-            <br/><br/>
-
-            <input type="submit" />
-        </form>
-        
-        <p>How many comments do you want to show?</p>
-        <input type="number" id="inputtedNumber" value="5">
-        <button onclick="getComments()">Get the submitted comments!</button>
-        <ul id="comment-container"></ul>
-
-        <form action="/delete-data" method="POST">
-            <p>Click this if you want to delete all the comments!</p>
-            <button onclick="deleteComments()">Delete all the comments!</button>
-            <div id="completionNotice"></div>
-        </form>
-        
-        <body>
-            <h1>Other Website Visitor's Chocolate Preferences</h1>
-            <div id="chart-container"></div>
-            <h2>Feel free to add your vote below!</h2>
-            <form action="/chocolate-data" method="POST">
-                <select name="chocolateType">
-                    <option value="Dark Chocolate">Dark Chocolate</option>
-                    <option value="White Chocolate">White Chocolate</option>
-                    <option value="Milk Chocolate">Milk Chocolate</option>
-                </select>
-                <button>Submit</button>
-            </form>
-        <body>
-
-        <body onload="createMap();">
-            <h1>Here's a map! How Fun!</h1>
-            <div id="map"></div>
-        </body>
     </div>
   </body>
 </html>
