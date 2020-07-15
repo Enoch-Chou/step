@@ -276,10 +276,11 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void everyOptionalAttendeeIsConsidered() {
-    // Have each person have different events. We should see two options because each person has
+    // Have each person have different events. We should see three options because each person has
     // split the restricted times.
     //
     // Events  :       |--A--|     |--B--|
+    //           |-------------C---------------| <- optional, so this will not affect the outcome
     // Day     : |-----------------------------|
     // Options : |--1--|     |--2--|     |--3--|
 
@@ -306,12 +307,12 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void anOptionalAttendeeIsConsidered() {
-         // Have each person have different events. We should see two options because each person has
-    // split the restricted times.
+    // Have each person have different events. We should see two options because person c 
+    // has now eliminated one of the options
     //
-    // Events  :       |--A--|     |--B--|
+    // Events  :       |--A--||-C-||--B--|
     // Day     : |-----------------------------|
-    // Options : |--1--|     |--2--|     |--3--|
+    // Options : |--1--|                 |--3--|
 
     Collection<Event> events = Arrays.asList(
         new Event("Event 1", TimeRange.fromStartDuration(TIME_0800AM, DURATION_30_MINUTES),
