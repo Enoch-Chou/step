@@ -15,6 +15,7 @@
 package com.google.sps.servlets;
 
 import java.io.IOException;
+import com.google.gson.Gson;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -32,7 +33,8 @@ public class DeleteDataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String json = "[done!]";
+    Gson gson = new Gson();
+    String json = gson.toJson("done!");
     response.setContentType("application/json");
     response.getWriter().println(json);
   }
@@ -49,7 +51,8 @@ public class DeleteDataServlet extends HttpServlet {
             datastore.delete(key);
         }
 
-        String json = "[done!]";
+         Gson gson = new Gson();
+        String json = gson.toJson("done!");
         response.setContentType("application/json");
         response.getWriter().println(json);
         response.sendRedirect("/explore.html");
