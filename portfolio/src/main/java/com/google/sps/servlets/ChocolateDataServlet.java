@@ -15,6 +15,9 @@
 package com.google.sps.servlets;
 
 import com.google.gson.Gson;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +45,13 @@ public class ChocolateDataServlet extends HttpServlet {
         String chocolateType = request.getParameter("chocolateType");
         int currentVotes = chocolateTypeVotes.containsKey(chocolateType) ? chocolateTypeVotes.get(chocolateType) : 0;
         chocolateTypeVotes.put(chocolateType, currentVotes + 1);
+        
+        Entity chocolateEntity = new Entity("chocolateTypes");
+        chocolateEntity.setProperty("chocolate", chocolateType);
 
-        response.sendRedirect("/index.html");
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(chocolateEntity);
+
+        response.sendRedirect("/explore.html");
     }
 }
