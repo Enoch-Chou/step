@@ -31,9 +31,15 @@ import javax.servlet.http.HttpServletResponse;
 public class ChocolateDataServlet extends HttpServlet {
     
     private Map<String, Integer> chocolateTypeVotes = new HashMap<>();
-
+    
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int whiteChocolateVotes = 85;
+        chocolateTypeVotes.put("White Chocolate", whiteChocolateVotes);
+        int darkChocolateVotes = 113;
+        chocolateTypeVotes.put("Dark Chocolate", darkChocolateVotes);
+        int milkChocolateVotes = 102;
+        chocolateTypeVotes.put("Milk Chocolate", milkChocolateVotes);
         response.setContentType("application/json");
         Gson gson = new Gson();
         String json = gson.toJson(chocolateTypeVotes);
@@ -45,13 +51,12 @@ public class ChocolateDataServlet extends HttpServlet {
         String chocolateType = request.getParameter("chocolateType");
         int currentVotes = chocolateTypeVotes.containsKey(chocolateType) ? chocolateTypeVotes.get(chocolateType) : 0;
         chocolateTypeVotes.put(chocolateType, currentVotes + 1);
-        
+
         Entity chocolateEntity = new Entity("chocolateTypes");
         chocolateEntity.setProperty("chocolate", chocolateType);
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(chocolateEntity);
-
         response.sendRedirect("/explore.html");
     }
 }
