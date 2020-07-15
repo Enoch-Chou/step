@@ -82,7 +82,7 @@ public class DataServlet extends HttpServlet {
       response.getWriter().println(comments);
       
       //Redirect back to the HTML page.
-      response.sendRedirect("/index.html");
+      response.sendRedirect("/explore.html");
   }
 
   private String convertArrayToJson(List<String> input) {
