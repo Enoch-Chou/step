@@ -52,7 +52,7 @@ public class DeleteDataServlet extends HttpServlet {
         String json = "[done!]";
         response.setContentType("application/json");
         response.getWriter().println(json);
-        response.sendRedirect("/index.html");
+        response.sendRedirect("/explore.html");
   }
 
 }
