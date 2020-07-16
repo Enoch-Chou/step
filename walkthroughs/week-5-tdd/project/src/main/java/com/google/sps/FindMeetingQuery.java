@@ -18,12 +18,18 @@ import java.util.Collection;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * The goal of this class is to find a possible meeting time
+ * between various mandatory attendees and optional attendees.
+ * This is done through the query method which returns a collection
+ * of possible meeting times.
+ */
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     ArrayList<TimeRange> collection = new ArrayList<TimeRange>();
     ArrayList<TimeRange> optionalCollection = new ArrayList<TimeRange>();
     TimeRange timeRange = TimeRange.fromStartDuration(0, 1440);
-    collection.add(timeRange); // original timeRange.
+    collection.add(timeRange); // Sets up initial option as the whole day.
     if (request.getDuration() >= 1440) {
         collection.clear();
     }
